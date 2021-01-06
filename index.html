@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <style>
+            body {
+                font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+                font-weight: bold;
+            }
+            header {
+                padding: 32px;
+            }
+            .pet-name {
+                font-size: 32px;
+            }
+            .image-area {
+                background-color: rgb(224, 159, 37);
+                display: grid;
+                justify-items: center;
+            }
+            .interactive-area {
+                background-color: cyan;
+                display: grid;
+                align-items: center;
+                justify-items: center;
+            }
+            .main {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+            }
+            .pet-image {
+                height: 500px;
+                max-width: 100%;
+                padding: 32px;
+            }
+            .activity-icon {
+                width: 40px;
+                height: 40px;
+            }
+            .activity-row {
+                display: grid;
+                grid-template-columns: 1fr 1fr 1fr;
+                width: 90%;
+                align-items: center;
+            }
+            .activity-button {
+                background-color: #B27499;
+                border-radius: 8px;
+                box-shadow: 0 0 5px 0 grey;
+                color: white;
+                cursor: pointer;
+                height: 100%;
+                display: grid;
+                align-items: center;
+                justify-items: center;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="header">
+            <div class="pet-name">Brillo Biscuit</div>
+            <div class="description">He's a hedgehog trying to make his way through the world!</div>
+        </div>
+        <div class="main">
+            <div class="image-area">
+                <img class="pet-image" src="imgs/neutral_hedgehog.jpg" />
+            </div>
+            <div class="interactive-area">
+                <div class="activity-row">
+                    <img class="activity-icon" src="imgs/food.jpg" />
+                    <div class="activity-stat">100</div>
+                    <div class="activity-button">Eat Worms</div>
+                </div>
+                <div class="activity-row">
+                    <img class="activity-icon" src="imgs/water.jpg" />
+                    <div class="activity-stat">50</div>
+                    <div class="activity-button">Drink Water</div>
+                </div>
+                <div class="activity-row">
+                    <img class="activity-icon" src="imgs/exercise.jpg" />
+                    <div class="activity-stat">5</div>
+                    <div class="activity-button">Exercise</div>
+                </div>
+            </div>
+        </div>
+    </body>
+
+</html>
