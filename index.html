@@ -53,6 +53,15 @@
                 align-items: center;
                 justify-items: center;
             }
+            /*This is for when the pet has passed out*/
+            .hidden {
+                display: none;
+            }
+            /*To edit the display of the final message*/
+            .message {
+                padding: 32px;
+                font-size: 16px;
+            }
         </style>
     </head>
     <body>
@@ -62,26 +71,123 @@
         </div>
         <div class="main">
             <div class="image-area">
-                <img class="pet-image" src="imgs/neutral_hedgehog.jpg" />
+                <img class="pet-image"  id="pet-image" src="imgs/neutral_hedgehog.jpg" />
             </div>
             <div class="interactive-area">
-                <div class="activity-row">
+                <div class="activity-row" id="food-row">
                     <img class="activity-icon" src="imgs/food.jpg" />
-                    <div class="activity-stat">100</div>
-                    <div class="activity-button">Eat Worms</div>
+                    <div class="activity-stat" id="food-stat">50</div>
+                    <div class="activity-button" onclick="giveFood()">Eat Worms</div>
                 </div>
-                <div class="activity-row">
+                <div class="activity-row" id="water-row">
                     <img class="activity-icon" src="imgs/water.jpg" />
-                    <div class="activity-stat">50</div>
-                    <div class="activity-button">Drink Water</div>
+                    <div class="activity-stat" id="water-stat">50</div>
+                    <div class="activity-button" onclick="giveWater()">Drink Water</div>
                 </div>
-                <div class="activity-row">
+                <div class="activity-row" id="exercise-row">
                     <img class="activity-icon" src="imgs/exercise.jpg" />
-                    <div class="activity-stat">5</div>
-                    <div class="activity-button">Exercise</div>
+                    <div class="activity-stat" id="exercise-stat">50</div>
+                    <div class="activity-button" onclick="giveExercise()">Exercise</div>
+                </div>
+                <div class="end-game hidden" id="end-game">
+                    <div class="message">Your pet has passed out.</div>
+                    <div class="activity-button restart-button" onclick="restart()">Restart</div>
                 </div>
             </div>
         </div>
     </body>
+    <script>
+        // Beginning values for pet care
+        var food = 50;
+        var water = 50;
+        var exercise = 50;
+        //for status of pet's health
+        var hasNotPassedOut = true;
 
+        var giveFood = () => {
+        food += 15;
+        updateHTML();
+        }
+
+        var giveWater = () => {
+            water += 15;
+            food -= 5;
+            exercise -= 2;
+            updateHTML();
+        }
+
+        var giveExercise = () => {
+            exercise += 30;
+            water -= 15;
+            food -= 10;
+            updateHTML();
+        }
+
+        var updateHTML = () => {
+            //These specifically update the stats on the pet's health
+            document.getElementById("food-stat").innerHTML = food;
+            document.getElementById("water-stat").innerHTML = water;
+            document.getElementById("exercise-stat").innerHTML = exercise;
+            
+            var lowestStat = Math.min(food, water, exercise);
+            var imageSrc ;
+            if (lowestStat <= 0) {
+                imageSrc = "imgs/passedOut_hedgehog.jpg";
+                //To restart the game
+                if (hasNotPassedOut) {
+                    toggleInteractivity();
+                    hasNotPassedOut = false;
+                }
+            }
+            else if (lowestStat < 25) {
+                imageSrc = "imgs/tired_hedgehog.jpg";
+            }
+            else if (lowestStat < 75) {
+                imageSrc = "imgs/neutral_hedgehog.jpg";
+            }
+            else if (lowestStat < 150) {
+                imageSrc = "imgs/upbeat_hedgehog.jpg";
+            }
+            else {
+                imageSrc = "imgs/exuberant_hedgehog.jpg";
+            }
+            //This changes the pet image based on the status of the animal
+            document.getElementById("pet-image").src = imageSrc;
+        }
+
+        // This will simulate the pet living and becoming hungry, thirsty, or restless
+        var agePet = () => {
+            water -= 8;
+            food -= 4;
+            exercise -= 2;
+
+            updateHTML();
+        }
+
+        //This will tell the program how often to run the function agePet
+        setInterval(agePet, 2000) //This is in milliseconds
+
+        //For restarting the game when the pet has passed out
+        var toggleInteractivity = () => {
+            //Specifically, these will see if the elements with the ids specified (in first parantheses) are connected with the class (in second parantheses)
+            //If it is, then the class will be removed, and if it isn't, then the class will be added
+            document.getElementById("food-row").classList.toggle("hidden");
+            document.getElementById("water-row").classList.toggle("hidden");
+            document.getElementById("exercise-row").classList.toggle("hidden");
+            document.getElementById("end-game").classList.toggle("hidden");
+        }
+
+        //This is run once the restart button has been pressed
+        var restart = () => {
+            food = 50;
+            water = 50;
+            exercise = 50;
+
+            hasNotPassedOut = true;
+
+            toggleInteractivity();
+
+            updateHTML();
+        }
+    </script>
 </html>
